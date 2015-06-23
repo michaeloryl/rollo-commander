@@ -1,5 +1,7 @@
 'use strict';
 
+var TOPIC_ROLLO_TEST = 'rollo:test';
+
 angular.module('rolloCommanderApp', [
   'ngCookies',
   'ngResource',
@@ -14,3 +16,4 @@ angular.module('rolloCommanderApp', [
 
     $locationProvider.html5Mode(true);
   });
+

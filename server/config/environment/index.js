@@ -14,6 +14,7 @@ function requiredProcessEnv(name) {
 // ============================================
 var all = {
   TOPIC_THING: 'topic-thing',
+  TOPIC_ROLLO_TEST: 'rollo:test',
 
   env: process.env.NODE_ENV,
 
