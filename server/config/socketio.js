@@ -9,6 +9,7 @@ var config = require('./environment');
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
     console.log('Socket Disconect: [%s]', socket.address);
+  require('../api/rollo/rollo.socket').deregister(socket);
 }
 
 // When the user connects.. perform this
