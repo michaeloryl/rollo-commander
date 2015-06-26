@@ -7,8 +7,8 @@ angular.module('rolloCommanderApp').factory('socket', function ($rootScope, $log
   return {
     on: function (eventName, callback) {
       $log.info('SOCKET: Listening for server event ' + eventName);
-      socket.on(eventName, function () {
-        $log.info('SOCKET: <- ' + eventName);
+      socket.on(eventName, function (data) {
+        $log.info('SOCKET: <- ' + eventName + ' / ' + JSON.stringify(data));
         var args = arguments;
         $rootScope.$apply(function () {
           callback.apply(socket, args);
@@ -16,9 +16,8 @@ angular.module('rolloCommanderApp').factory('socket', function ($rootScope, $log
       });
     },
     emit: function (eventName, data, callback) {
-      $log.info('Socket service received emit request: ' + eventName);
       socket.emit(eventName, data, function (confirmation) {
-        $log.info('SOCKET: -> ' + confirmation);
+        $log.info('SOCKET: -> ' + eventName + ' / ' + JSON.stringify(confirmation));
         var args = arguments;
         $rootScope.$apply(function () {
           if (callback) {

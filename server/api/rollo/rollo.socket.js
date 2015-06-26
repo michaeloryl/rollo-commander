@@ -20,13 +20,13 @@ exports.register = function (socket) {
   }));
 
   socket.on(config.TOPIC_ROLLO_CMD, function(data, fn) {
-    console.log('SOCKET <- ' + JSON.stringify(data));
-    fn(true);
+    console.log('SOCKET <- ' + config.TOPIC_ROLLO_CMD + ' / ' + JSON.stringify(data));
+    fn(data);
   });
 
   socket.on(config.TOPIC_ROLLO_TEST, function(data, fn) {
-    console.log('SOCKET <- ' + JSON.stringify(data));
-    fn(true);
+    console.log('SOCKET <- ' + config.TOPIC_ROLLO_TEST + ' / ' + JSON.stringify(data));
+    fn(data);
   });
 };
 

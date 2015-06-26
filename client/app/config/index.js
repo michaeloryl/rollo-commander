@@ -12,5 +12,9 @@ angular.module('rolloCommanderApp').constant('config', {
   CMD_LOAD: 'load',
   CMD_STATUS: 'status',
   CMD_DEBUG_START: 'debug:start',
-  CMD_DEBUG_STOP: 'debug:stop'
+  CMD_DEBUG_STOP: 'debug:stop',
+  CMD_CONNECT: 'connect',
+  CMD_DISCONNECT: 'disconect',
+  STATUS_NO_CODE: 'no code',
+  STATUS_OK: 'ok'
 });

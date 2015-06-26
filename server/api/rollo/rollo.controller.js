@@ -15,7 +15,7 @@ var config = require('../../config/environment');
 
 // Get list of things
 exports.test = function (req, res) {
-  var message = { msg: 'This is a message response to /api/rollo/test'};
+  var message = { msg: 'This is a message from server to client in response to /api/rollo/test'};
   console.log('Somebody is trying to send a message');
   events.publish(config.TOPIC_ROLLO_TEST, message);
   res.json(message);
