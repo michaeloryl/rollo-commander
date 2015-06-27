@@ -14,13 +14,16 @@ exports.register = function (socket) {
     socket.emit(config.TOPIC_ROLLO_TEST, data);
   }));
 
+/*
   subscriptions.push(events.subscribe(config.TOPIC_ROLLO_CMD, function(data) {
     console.log('SOCKET -> ' + JSON.stringify(data));
     socket.emit(config.TOPIC_ROLLO_TEST, data);
   }));
+*/
 
   socket.on(config.TOPIC_ROLLO_CMD, function(data, fn) {
     console.log('SOCKET <- ' + config.TOPIC_ROLLO_CMD + ' / ' + JSON.stringify(data));
+    events.publish(config.TOPIC_ROLLO_CMD, data);
     fn(data);
   });
 

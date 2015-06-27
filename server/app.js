@@ -12,6 +12,8 @@ var config = require('./config/environment');
 // Setup server
 var app = express();
 var server = require('http').createServer(app);
+var rolloExec = require('./components/rollo-exec');
+
 
 var socketio = require('socket.io').listen(server);
 require('./config/socketio')(socketio);
