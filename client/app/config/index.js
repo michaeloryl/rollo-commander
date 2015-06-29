@@ -15,6 +15,12 @@ angular.module('rolloCommanderApp').constant('config', {
   CMD_DEBUG_STOP: 'debug:stop',
   CMD_CONNECT: 'connect',
   CMD_DISCONNECT: 'disconect',
+  CMD_FILE_LOAD: 'file:load',
+  CMD_FILE_SAVE: 'file:save',
+  CMD_FILE_LIST: 'file:list',
+  CMD_FILE_DELETE: 'file:delete',
+  CMD_CYLON_START: 'cylon:start',
+  CMD_CYLON_HALT: 'cylon:halt',
   STATUS_NO_CODE: 'no code',
   STATUS_OK: 'ok'
 });
