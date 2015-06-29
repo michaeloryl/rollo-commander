@@ -2,7 +2,7 @@ var Cylon = require('cylon');
 var Rollo = require('rollo');
 var events = require('../events');
 var config = require('../../config/environment');
-var my = null;
+var mySphero = null;
 
 var robot = Cylon.robot({
   connections: {
@@ -13,10 +13,9 @@ var robot = Cylon.robot({
     sphero: {driver: 'sphero'}
   },
 
-  work: function(mySphero) {
-    my = mySphero;
+  work: function(robots) {
+    mySphero = robots.devices.sphero;
   }
-
 });
 
 module.exports.register = function() {
@@ -62,7 +61,7 @@ function cmdLoad(data) {
   console.log('cmdLoad: ' + JSON.stringify(data));
   var tree = Rollo.parse(data);
 
-  Rollo.execute(my, tree, function(response) {
+  Rollo.execute(mySphero, tree, function(response) {
     console.log('cmdLoad:callback(): ' + response);
   })
 }
@@ -89,13 +88,13 @@ function cmdDisconnect(data) {
 
 function cmdCylonStart(data) {
   console.log('cmdCylonStart: ' + JSON.stringify(data));
-  if (my == null) {
+  if (mySphero == null) {
     robot.start()
   }
 }
 
 function cmdCylonHalt(data) {
   console.log('cmdCylonHalt: ' + JSON.stringify(data));
-  my = null;
+  mySphero = null;
   robot.halt();
 }
