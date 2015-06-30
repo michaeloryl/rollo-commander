@@ -13,12 +13,12 @@ var robot = Cylon.robot({
     sphero: {driver: 'sphero'}
   },
 
-  work: function(robots) {
+  work: function (robots) {
     mySphero = robots.devices.sphero;
   }
 });
 
-module.exports.register = function() {
+module.exports.register = function () {
   events.subscribe(config.TOPIC_ROLLO_CMD, commandHandler);
   return module.exports;
 };
@@ -59,11 +59,22 @@ function cmdStop(data) {
 
 function cmdLoad(data) {
   console.log('cmdLoad: ' + JSON.stringify(data));
-  var tree = Rollo.parse(data);
+  var tree = null;
 
-  Rollo.execute(mySphero, tree, function(response) {
-    console.log('cmdLoad:callback(): ' + response);
-  })
+  try {
+    tree = Rollo.parse(data);
+  } catch (err) {
+    console.log('Parse error: ' + JSON.stringify(err));
+    events.publish(config.TOPIC_ROLLO_ERROR, err);
+
+    return;
+  }
+
+  if (tree != null) {
+    Rollo.execute(mySphero, tree, function (response) {
+      console.log('cmdLoad:callback(): ' + response);
+    })
+  }
 }
 
 function cmdStatus(data) {

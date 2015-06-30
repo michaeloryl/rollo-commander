@@ -5,6 +5,7 @@ angular.module('rolloCommanderApp')
     var methods = {};
     $scope.code = "color 'darkgray'\nflash 'green'\nwaitForTap 3 seconds";
     $scope.data = {};
+    $scope.err = {};
     $log.info("Started MainCtrl");
 
     $scope.lineNumber = 0;
@@ -12,6 +13,11 @@ angular.module('rolloCommanderApp')
 
     socket.on(config.TOPIC_ROLLO_TEST, function (data) {
       $scope.data = data;
+    });
+
+    socket.on(config.TOPIC_ROLLO_ERROR, function (err) {
+      $scope.err = err;
+      $log.info("Received error from server");
     });
 
     $scope.emitTest = function () {

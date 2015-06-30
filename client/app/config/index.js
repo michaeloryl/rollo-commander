@@ -7,6 +7,7 @@
 angular.module('rolloCommanderApp').constant('config', {
   TOPIC_ROLLO_TEST: 'rollo:test',
   TOPIC_ROLLO_CMD: 'rollo:cmd',
+  TOPIC_ROLLO_ERROR: 'rollo:error',
   CMD_RUN: 'run',
   CMD_STOP: 'stop',
   CMD_LOAD: 'load',
