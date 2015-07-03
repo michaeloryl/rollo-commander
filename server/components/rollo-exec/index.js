@@ -25,7 +25,6 @@ module.exports.register = function () {
 
 function commandHandler(payload) {
   var commands = {
-    CMD_RUN: cmdRun,
     CMD_STOP: cmdStop,
     CMD_LOAD: cmdLoad,
     CMD_STATUS: cmdStatus,
@@ -49,12 +48,15 @@ function commandHandler(payload) {
   }
 }
 
+/*
 function cmdRun(data) {
   console.log('cmdRun: ' + JSON.stringify(data));
 }
+*/
 
 function cmdStop(data) {
   console.log('cmdStop: ' + JSON.stringify(data));
+  Rollo.stop();
 }
 
 function cmdLoad(data) {
@@ -71,8 +73,12 @@ function cmdLoad(data) {
   }
 
   if (tree != null) {
-    Rollo.execute(mySphero, tree, function (response) {
-      console.log('cmdLoad:callback(): ' + response);
+    Rollo.execute(mySphero, tree, function (err) {
+      if (err) {
+        events.publish(config.TOPIC_ROLLO_ERROR, err);
+      } else {
+        events.publish(config.TOPIC_ROLLO_COMPLETE, {});
+      }
     })
   }
 }
@@ -107,5 +113,7 @@ function cmdCylonStart(data) {
 function cmdCylonHalt(data) {
   console.log('cmdCylonHalt: ' + JSON.stringify(data));
   mySphero = null;
-  robot.halt();
+  robot.halt(function (resp) {
+    console.log("Halt callback: " + JSON.stringify(resp));
+  });
 }

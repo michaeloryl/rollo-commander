@@ -5,6 +5,7 @@
 'use strict';
 var config = require('../../config/environment');
 var events = require('../../components/events');
+var Rollo = require('rollo');
 var subscriptions = [];
 
 exports.register = function (socket) {
@@ -17,6 +18,26 @@ exports.register = function (socket) {
   subscriptions.push(events.subscribe(config.TOPIC_ROLLO_ERROR, function(err) {
     console.log('SOCKET -> error ' + JSON.stringify(err));
     socket.emit(config.TOPIC_ROLLO_ERROR, err);
+  }));
+
+  subscriptions.push(events.subscribe(config.TOPIC_ROLLO_COMPLETE, function(data) {
+    console.log('SOCKET -> complete ' + JSON.stringify(data));
+    socket.emit(config.TOPIC_ROLLO_COMPLETE, data);
+  }));
+
+  Rollo.registerLineEvent(function(data) {
+    console.log('SOCKET -> line ' + JSON.stringify(data));
+    socket.emit(config.NPM_LINE_RUNNING, data);
+  });
+
+  Rollo.registerSayEvent(function(data) {
+    console.log('SOCKET -> say ' + JSON.stringify(data));
+    socket.emit(config.NPM_SAY, data);
+  });
+
+  subscriptions.push(events.subscribe(config.NPM_LOG, function(data) {
+    console.log('SOCKET -> line ' + JSON.stringify(data));
+    socket.emit(config.NPM_LOG, data);
   }));
 
   /*

@@ -3,17 +3,38 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-6">
-      <h3 class="page-header">Data:</h3>
+      <h3>Line:</h3>
+
       <div class="panel panel-default">
-        <p>{{data}}</p>
+        <div>{{JSON.stringify(line)}}</div>
       </div>
     </div>
     <div class="col-xs-6">
-      <h3 class="page-header">Error:</h3>
-      <div ng-show="err.name != null" class="panel panel-default">
-        <p>Error: {{err.name}}</p>
-        <p>Line: {{err.line}}, column: {{err.column}} </p>
-        <p>Message: {{err.message}}</p>
+      <h3>Error:</h3>
+
+      <div class="panel panel-default">
+        <span ng-show="err.name != null">
+          <div>
+            <div>Error: {{err.name}}</div>
+            <div>Line: {{err.line}}, column: {{err.column}} </div>
+            <div>Message: {{err.message}}</div>
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6">
+      <h3>Log:</h3>
+      <div class="panel panel-default">
+        {{log}}
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <h3>Say:</h3>
+      <div class="panel panel-default">
+        {{say}}
       </div>
     </div>
   </div>

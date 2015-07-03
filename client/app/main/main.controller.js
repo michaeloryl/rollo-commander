@@ -3,16 +3,29 @@
 angular.module('rolloCommanderApp')
   .controller('MainCtrl', function ($scope, $http, socket, $log, config) {
     var methods = {};
-    $scope.code = "color 'darkgray'\nflash 'green'\nwaitForTap 3 seconds";
-    $scope.data = {};
+    $scope.code = "speed 40\nwhile 1 == 1 {\n  go 1\n  stop\n  flash 'yellow'\n  wait 1\n  right\n}";
     $scope.err = {};
+    $scope.log = [];
+    $scope.say = [];
     $log.info("Started MainCtrl");
 
     $scope.lineNumber = 0;
     $scope.awesomeThings = [];
 
-    socket.on(config.TOPIC_ROLLO_TEST, function (data) {
-      $scope.data = data;
+    socket.on(config.NPM_LINE_RUNNING, function (data) {
+      $scope.line = data;
+    });
+
+    socket.on(config.NPM_LINE_RUNNING, function (data) {
+      $scope.line = data;
+    });
+
+    socket.on(config.NPM_LOG, function (data) {
+      $scope.log.unshift(data);
+    });
+
+    socket.on(config.NPM_SAY, function (data) {
+      $scope.say.unshift(data);
     });
 
     socket.on(config.TOPIC_ROLLO_ERROR, function (err) {
