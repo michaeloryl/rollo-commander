@@ -10,51 +10,35 @@ var subscriptions = [];
 
 exports.register = function (socket) {
   console.log('Rollo socket registered: ' + socket.id);
-  subscriptions.push(events.subscribe(config.TOPIC_ROLLO_TEST, function(data) {
-    console.log('SOCKET -> test ' + JSON.stringify(data));
-    socket.emit(config.TOPIC_ROLLO_TEST, data);
+
+  subscriptions.push(Rollo.registerDisconnectEvent(function() {
+    console.log('SOCKET -> disconnect');
+    socket.emit(config.TOPIC_ROLLO_DISCONNECT, {});
   }));
 
-  subscriptions.push(events.subscribe(config.TOPIC_ROLLO_ERROR, function(err) {
-    console.log('SOCKET -> error ' + JSON.stringify(err));
-    socket.emit(config.TOPIC_ROLLO_ERROR, err);
+  subscriptions.push(Rollo.registerCompleteEvent(function() {
+    console.log('SOCKET -> complete');
+    socket.emit(config.TOPIC_ROLLO_COMPLETE, {});
   }));
 
-  subscriptions.push(events.subscribe(config.TOPIC_ROLLO_COMPLETE, function(data) {
-    console.log('SOCKET -> complete ' + JSON.stringify(data));
-    socket.emit(config.TOPIC_ROLLO_COMPLETE, data);
-  }));
-
-  Rollo.registerLineEvent(function(data) {
+  subscriptions.push(Rollo.registerLineEvent(function(data) {
     console.log('SOCKET -> line ' + JSON.stringify(data));
     socket.emit(config.NPM_LINE_RUNNING, data);
-  });
-
-  Rollo.registerSayEvent(function(data) {
-    console.log('SOCKET -> say ' + JSON.stringify(data));
-    socket.emit(config.NPM_SAY, data);
-  });
-
-  subscriptions.push(events.subscribe(config.NPM_LOG, function(data) {
-    console.log('SOCKET -> line ' + JSON.stringify(data));
-    socket.emit(config.NPM_LOG, data);
   }));
 
-  /*
-    subscriptions.push(events.subscribe(config.TOPIC_ROLLO_CMD, function(data) {
-      console.log('SOCKET -> ' + JSON.stringify(data));
-      socket.emit(config.TOPIC_ROLLO_TEST, data);
-    }));
-  */
+  subscriptions.push(Rollo.registerSayEvent(function(data) {
+    console.log('SOCKET -> say ' + JSON.stringify(data));
+    socket.emit(config.NPM_SAY, data);
+  }));
+
+  subscriptions.push(Rollo.registerLogEvent(function(data) {
+    console.log('SOCKET -> log ' + JSON.stringify(data));
+    socket.emit(config.NPM_LOG, data);
+  }));
 
   socket.on(config.TOPIC_ROLLO_CMD, function(data, fn) {
     console.log('SOCKET <- ' + config.TOPIC_ROLLO_CMD + ' / ' + JSON.stringify(data));
     events.publish(config.TOPIC_ROLLO_CMD, data);
-    fn(data);
-  });
-
-  socket.on(config.TOPIC_ROLLO_TEST, function(data, fn) {
-    console.log('SOCKET <- ' + config.TOPIC_ROLLO_TEST + ' / ' + JSON.stringify(data));
     fn(data);
   });
 };
