@@ -2,13 +2,76 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-xs-6">
-      <h3>Line:</h3>
-
-      <div class="panel panel-default">
-        <div>{{JSON.stringify(line)}}</div>
+    <div class="col-xs-3">
+      <div class="btn-group btn-group-justified">
+        <div class="btn-group">
+          <button class="btn btn-primary" ng-click="emitCommand('cylon_start')">Cylon Start</button>
+        </div>
+      </div>
+      <div class="btn-group btn-group-justified">
+        <div class="btn-group">
+          <button class="btn btn-primary" ng-click="emitCommand('cylon_halt')">Cylon Halt</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+              <button class="btn btn-default">^</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+              <button class="btn btn-default">&lt;</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="btn-group btn-group-justified">
+            <div class="btn-group text-center">
+              <button class="btn btn-default">GO</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="btn-group btn-group-justified">
+            <div class="btn-group text-center">
+              <button class="btn btn-default">&gt;</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12">
+          <div class="btn-group">
+            <button class="btn btn-default">DN</button>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="col-xs-9">
+      <div class="btn-group">
+        <button class="btn btn-primary" ng-click="run()">Run</button>
+        <button class="btn btn-primary" ng-click="stop()">Stop</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-offset-3 col-xs-9">
+      <textarea ng-model="code" class="form-control" name="code" id="code" rows="10"></textarea>
+    </div>
+    <div class="col-xs-offset-3 col-xs-9">
+      <table class="table">
+        <tr><th>Currently running code</th></tr>
+        <tr ng-repeat="line in lines"><td>{{line}}</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
     <div class="col-xs-6">
       <h3>Error:</h3>
 
@@ -16,7 +79,7 @@
         <span ng-show="err.name != null">
           <div>
             <div>Error: {{err.name}}</div>
-            <div>Line: {{err.line}}, column: {{err.column}} </div>
+            <div>Line: {{err.line}}, column: {{err.column}}</div>
             <div>Message: {{err.message}}</div>
           </div>
         </span>
@@ -26,47 +89,18 @@
 
   <div class="row">
     <div class="col-xs-6">
-      <h3>Log:</h3>
+      <h3>Current Line:</h3>
+
       <div class="panel panel-default">
-        {{log}}
+        <div>{{line}}</div>
       </div>
     </div>
     <div class="col-xs-6">
       <h3>Say:</h3>
+
       <div class="panel panel-default">
         {{say}}
       </div>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <!--
-    <div class="row">
-      <div class="col-lg-12">
-        <button class="btn" ng-click="emitTest()">Send Test</button>
-      </div>
-    </div>
-  -->
-
-  <div class="row">
-    <div class="col-xs-3">
-      <div class="btn-group">
-        <button class="btn btn-primary" ng-click="emitCommand('cylon_start')">Cylon Start</button>
-        <button class="btn btn-primary" ng-click="emitCommand('cylon_halt')">Cylon Halt</button>
-      </div>
-    </div>
-    <div class="col-xs-9">
-      <div class="btn-group">
-        <button class="btn btn-primary" ng-click="emitCommand('load', code)">Run</button>
-        <button class="btn btn-primary" ng-click="emitCommand('stop')">Stop</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-xs-offset-3 col-xs-9">
-      <textarea ng-model="code" class="form-control" name="code" id="code" rows="10"></textarea></div>
     </div>
   </div>
 </div>

@@ -23,17 +23,17 @@ exports.register = function (socket) {
 
   subscriptions.push(Rollo.registerLineEvent(function(data) {
     console.log('SOCKET -> line ' + JSON.stringify(data));
-    socket.emit(config.NPM_LINE_RUNNING, data);
+    socket.emit(config.TOPIC_ROLLO_LINE, data);
   }));
 
   subscriptions.push(Rollo.registerSayEvent(function(data) {
     console.log('SOCKET -> say ' + JSON.stringify(data));
-    socket.emit(config.NPM_SAY, data);
+    socket.emit(config.TOPIC_ROLLO_SAY, data);
   }));
 
   subscriptions.push(Rollo.registerLogEvent(function(data) {
     console.log('SOCKET -> log ' + JSON.stringify(data));
-    socket.emit(config.NPM_LOG, data);
+    socket.emit(config.TOPIC_ROLLO_LOG, data);
   }));
 
   socket.on(config.TOPIC_ROLLO_CMD, function(data, fn) {
